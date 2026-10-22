@@ -1,0 +1,53 @@
+Siete comandos con 300000 filas reales, cada uno en una ejecución separada.
+Se comprobaron los registros y sus posiciones contra el TSV.
+
+Comando: java BMasApp construir C:\Users\sebas\Documents\Codex\2026-10-17\act-as-an-expert-java-developer-2\work\title.basics.tsv
+Registros: 300000
+Tamano de datos.dat: 27100907 bytes
+Tamano de indice.dat: 9658368 bytes
+Paginas escritas: 304708
+Tiempo de construccion: 13.4398709 segundos
+
+Comando: java BMasApp buscar tt0111161
+paginas leidas: 3 (#345 -> #861 -> #854)
+pos=9842458 tt0111161	movie	The Shawshank Redemption	The Shawshank Redemption	0	1994	\N	142	Drama
+ 
+Comando: java BMasApp rango 100000 100999 10
+pos=8859765 tt0100000	movie	Lehrer leben länger	Lehrer leben länger	0	1990	\N	49	Comedy
+pos=8859854 tt0100001	movie	Leichtsinnig - Walter Weer Material	Leichtsinnig - Walter Weer Material	0	1990	\N	\N	\N
+pos=8859969 tt0100002	movie	Lekin...	Lekin...	0	1990	\N	171	Drama,Fantasy,Musical
+pos=8860050 tt0100003	movie	The Lemon Sisters	The Lemon Sisters	0	1989	\N	93	Comedy,Romance
+pos=8860141 tt0100004	tvMovie	Leona Helmsley: The Queen of Mean	Leona Helmsley: The Queen of Mean	0	1990	\N	94	Drama,Romance
+pos=8860265 tt0100005	movie	Let This Film Serve as a Manifesto for a New Cinema	Let This Film Serve as a Manifesto for a New Cinema	0	1990	\N	\N	\N
+pos=8860412 tt0100006	movie	Let the Music Dance	Let the Music Dance	0	1990	\N	93	Drama,Music
+pos=8860504 tt0100007	movie	Lethal Angels 2	Yue gui xing dong	0	1990	\N	94	Action,Comedy
+pos=8860592 tt0100008	tvMovie	Her Wicked Ways	Her Wicked Ways	0	1991	\N	95	Crime,Drama,Thriller
+pos=8860687 tt0100009	movie	Lethal Games	Lethal Games	0	1991	\N	83	Action,Thriller
+Registros entregados: 966
+Registros mostrados: 10
+Paginas leidas: 11
+
+Comando: java BMasApp secuencial 111161
+pos=9842458 tt0111161	movie	The Shawshank Redemption	The Shawshank Redemption	0	1994	\N	142	Drama
+Registros leidos por la busqueda: 108633
+
+Comando: java BMasApp info
+P: 4096
+M: 341
+L: 255
+Raiz: 345
+Niveles: 3
+Claves: 300000
+Paginas: 2358
+Hojas: 2343
+Internos: 14
+Ocupacion de hojas: 0.5021214631819437
+Ocupacion de internos: 0.4935064935064935
+
+Comando: java BMasApp verificar
+OK
+
+Comando: java BMasApp pagina 345
+#345 I n=12 [#3 22256 #344 44574 #517 67026 #689 89550 #861 111998 #1033 135216 #1205 158233 #1377 181695 #1549 205351 #1721 228695 #1893 251631 #2065 274590 #2237]
+
+Resultado: 7 comandos correctos. Fallas: 0.

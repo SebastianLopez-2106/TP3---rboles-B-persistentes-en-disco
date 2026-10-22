@@ -1,0 +1,12 @@
+Tabla C
+metodo;consultas;paginas_indice_por_consulta;registros_leidos_por_consulta;microsegundos_por_consulta
+B+ existentes;1000;3.0;1.0;49.198
+B+ inexistentes;1000;3.0;0.0;20.6998
+Secuencial existentes;50;0.0;152493.28;892883.616
+Secuencial inexistentes;50;0.0;300000.0;1766111.44
+Tabla D
+ancho;registros_entregados_por_consulta;paginas_leidas_por_consulta;hojas_leidas_por_consulta;microsegundos_por_consulta
+10;9.56;3.03;1.0299999999999998;31.681
+100;95.36;3.7;1.7000000000000002;46.966
+1000;956.33;10.44;8.44;175.346
+10000;9351.75;75.99;73.99;643.832

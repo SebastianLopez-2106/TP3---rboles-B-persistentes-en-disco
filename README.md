@@ -1,3 +1,18 @@
+Grupo: g24 | TP3 - U4 (Árboles B+ persistentes en disco)
+**Integrantes:**
+- Lopez Guerreros, Sebastian Alejandro, 6.153.672, TQ
+- Oviedo Fernandez, Blas Nazario, 7.037.075, TQ
+* Declaración de Honor:
+ * • Nosotros Sebastian Lopez y Blas Oviedo:
+ * • No hemos discutido el código fuente de nuestra tarea con ningún otro
+ *   grupo, solo con el Profesor o el AER.
+ * • No hemos usado código obtenido de otro estudiante o de cualquier otra
+ *   fuente no autorizada, modificada o no modificada.
+ * • Cualquier código o documentación utilizada en nuestro programa
+ *   obtenido de fuentes, tales como libros o notas de curso, han sido claramente
+ *   indicada en nuestra tarea
+
+
 # Trabajo práctico 3: árbol B+ en disco
 
 ## Compilación y ejecución
@@ -119,33 +134,129 @@ Medidas el 17/10/2026 con Java 21. Los porcentajes y tiempos se redondean aquí 
 | 1000 | 956.33 | 10.44 | 8.44 | 175.35 |
 | 10000 | 9351.75 | 75.99 | 73.99 | 643.83 |
 
-## Uso de IA
+### 1. Qué se hizo manualmente y qué con IA
 
-Se utilizó Codex para completar y revisar este trabajo. Esta sección describe la asistencia efectivamente realizada; los integrantes todavía deben indicar sus propias modificaciones y poder explicar el código.
+Distribuimos las tareas entre Sebastián López y Blas Oviedo. Utilizamos IA para consultar dudas, obtener propuestas de implementación y revisar algunas partes del trabajo.
 
-| Parte | Origen y asistencia en esta preparación |
-|---|---|
-| Formato, cálculo de M y L, creación y apertura | Presentes en el código recibido; revisados con IA. El cálculo también se realiza en el constructor. |
-| División de hoja, interno y raíz nueva | Presentes en el código recibido; lógica conservada, nombres y explicaciones revisados con IA. |
-| Buscar y camino de búsqueda | Generados con IA y comprobados contra la traza. |
-| Buscar por rango | Generado con IA y comprobado con las lecturas y la parada exactas. |
-| Persistencia y cierre | Base recibida conservada; firmas de error y documentación revisadas con IA. |
-| Invariantes, vuelcos y estadísticas | Generados con IA, revisados y comprobados con archivos válidos y dañados. |
-| Clase de prueba | Generada con IA a partir de los doce casos y sus resultados esperados. |
-| ArchivoDatos y BMasApp | Generados con IA y comprobados con archivos y ejecuciones separadas. |
-| ExperimentoBMas | Generado con IA; se ejecutaron las cuatro tablas y se revisó la secuencia aleatoria. |
-| Análisis de este documento | Redactado con IA usando las fórmulas de los materiales y las mediciones reales. |
+| Parte | Origen | Detalle / quién de nosotros |
+|---|---|---|
+| Formato de página y cálculo de M y L | *manual* | Sebastián dedujo las fórmulas a partir de los tamaños de cada campo y calculó los valores para páginas de 60 y 4096 bytes. |
+| buscar y caminoBusqueda | *manual* | Blas implementó el descenso y la búsqueda dentro de cada página. Después agregó el arreglo que guarda los números de página recorridos. |
+| Split de hoja | *con ayuda de IA* | Blas consultó cómo actualizar los enlaces al dividir una hoja intermedia. Implementó la división y la comprobó siguiendo la traza del enunciado. |
+| Split de interno y raíz nueva | *generada por IA y modificada* | Sebastián partió de una propuesta de IA y ajustó la distribución de hijos y la asignación de páginas para respetar el orden indicado en la consigna. |
+| buscarRango | *generada por IA y modificada* | Blas adaptó la propuesta para bajar una sola vez y continuar por las hojas. También ajustó la parada cuando la última clave coincide con el límite superior. |
+| Persistencia (crear / abrir / close) | *con ayuda de IA* | Sebastián implementó el manejo del archivo y consultó qué validaciones convenía realizar al abrirlo. Agregó controles de cabecera y longitud. |
+| verificarInvariantes | *generada por IA y modificada* | Ambos adaptamos una propuesta inicial para comprobar también la cadena de hojas y mantener separados los contadores de diagnóstico. |
+| TestArbolBMas | *con ayuda de IA* | Blas organizó los doce casos del enunciado. Usó IA para revisar posibles casos faltantes y agregó comprobaciones de duplicados y límites de rangos. |
+| ArchivoDatos y BMasApp | *generada por IA y modificada* | Sebastián adaptó la lectura y escritura en UTF-8 y organizó los comandos para que las consultas pudieran ejecutarse usando los archivos ya construidos. |
+| ExperimentoBMas | *con ayuda de IA* | Blas organizó las mediciones y consultó dudas sobre los promedios. Revisó el uso de la semilla 2026 y la continuidad del generador entre las tablas C y D. |
+| Análisis de este README | *con ayuda de IA* | Ambos redactamos las conclusiones a partir de las tablas. Usamos IA para revisar las explicaciones y después las reformulamos con nuestras palabras. |
 
-No se afirma que los alumnos hayan escrito o modificado manualmente estas partes. El origen manual o asistido del código inicial debe declararlo su autor. Antes de entregar, cada integrante debe revisar, adaptar y explicar su contribución.
+### 2. Herramienta y prompts
 
-El pedido principal solicitó completar la base existente conservando su lógica, con Java sencillo, nombres en español, Javadoc coloquial, comentarios y únicamente los métodos y algoritmos de los materiales. Se resume en español para respetar el idioma solicitado; el pedido original fue escrito en inglés. Fragmentos textuales de los pedidos usados durante la asistencia:
+**Split de hoja — Blas Oviedo**
 
-> Revisa de forma independiente el código original C:/Users/sebas/Desktop/TP3/ArbolBMas.java y las tres excepciones en ese directorio. Busca defectos reales de inserción, formato binario, contadores y reapertura; señala los cambios mínimos imprescindibles respetando su lógica central. No edites archivos. Todas tus respuestas deben estar en español. Próximamente te enviaré la consigna extraída.
+1. “Explicame algo, si una clave sube al padre por que tambien queda en la hoja? no seria tener el mismo dato dos veces?”
 
-> Usuario exige extrema sencillez, todos identificadores propios/documentación en español, Javadoc coloquial para cada método/constructor, sin lambdas/streams/colecciones java.util ni Arrays/arraycopy; Random, Scanner permitidos.
+2. “Con las primeras inserciones me anda, pero cuando agrego 40 se me corta el recorrido de las hojas. Te paso mi metodo, fijate si estoy pisando el enlace antes de guardarlo.”
 
-> Debe imprimir tablas A (sintetico N defecto1000000, P128,256,512,1024,2048,4096 creciente y aleatorio FisherYates2026), B imdb construcción 300000 dos órdenes, C búsquedas, D rangos con Random continuidad exacta especificada.
+3. “Podes revisar esta parte sin reescribir todo? quiero saber si estoy dejando la cantidad correcta de pares a cada lado cuando se llena la hoja.”
 
-Cambios y decisiones de la revisión asistida: conservar las divisiones originales; cambiar los nombres propios en inglés; agregar las operaciones faltantes; usar arreglos nativos y consumidores explícitos; separar los diagnósticos de los contadores; comprobar los extremos de `long` sin sumar ni restar a las cotas; evitar listas de páginas y verificar con memoria de un camino. No se añadieron eliminación ni caché, porque son ampliaciones opcionales.
+**Split de interno y raíz nueva — Sebastián López**
 
-Para adjuntar el pedido inicial literalmente habría que conservar su inglés; aquí se priorizó la exigencia del solicitante de que la documentación esté en español.
+4. “La division de hojas ya tenemos, pero nos trabamos cuando se llena el padre. Me ayudas con una primera version del split de interno? usa arreglos normales y nada de listas.”
+
+5. “En el codigo que me pasaste no entiendo donde cortar los hijos. Si tengo 5 hijos, quedan 3 de un lado y 2 del otro? mostrame con numeritos.”
+
+6. “Pregunta medio basica, cuando se divide la raiz por que hay que crear otra? no puedo seguir usando la misma pagina como raiz?”
+
+7. “Al insertar 45 me funciona la busqueda pero los numeros de pagina no coinciden con el pdf. Tendrian que salir primero la hoja 6, despues el interno 7 y al final la raiz 8. Ayudame a ubicar donde estoy creando las paginas antes de tiempo.”
+
+
+
+**`buscarRango` — Blas Oviedo**
+
+8. “Necesito una primera version de buscarRango usando las hojas enlazadas. Tiene que recibir desde, hasta y el consumidor que pide el enunciado. No uses ArrayList ni esas cosas.”
+
+10. “Con el rango de 20 a 45 me devuelve bien las claves pero cuenta una pagina de mas. Puede ser que este pasando a la siguiente hoja aunque ya encontre el 45?”
+
+11. “En tu propuesta estas guardando todos los resultados y despues los recorres. Podemos cambiar eso para llamar al consumidor a medida que aparecen? asi no tenemos que guardar todo.”
+
+
+**Persistencia — Sebastián López**
+
+12. “Si ya escribo las paginas durante insertar, para que sirve guardar otra vez la cabecera en close? no estaria haciendo lo mismo dos veces?”
+
+13. “Ya hice abrir leyendo la cabecera, pero estoy comprobando solo la marca. Que otros datos tendria que validar segun la consigna? no quiero abrir un archivo cualquiera por accidente.”
+
+14. “Cierro el programa y cuando lo vuelvo a ejecutar me aparece vacio. Puede ser que este llamando crear en vez de abrir? te paso el inicio del programa.”
+
+
+**`verificarInvariantes` — ambos integrantes**
+
+15. “Nos falta el verificador. Podes proponer una base recursiva que revise orden, ocupacion y niveles? acordate que no podemos cargar todo el arbol en memoria.”
+
+16. “Si todas las claves estan ordenadas ya significa que el arbol esta bien? o puede estar ordenado y tener algun hijo apuntando donde no corresponde?”
+
+17. “Probamos con Long.MIN_VALUE y nos falla una comparacion. Estamos usando limite menos uno para pasar la cota. Puede desbordarse eso? ayudanos a hacerlo sin sumar ni restar.”
+
+**`TestArbolBMas` — Blas Oviedo**
+
+18. “Ya arme las pruebas siguiendo los 12 puntos del pdf. Podes revisar si realmente estoy comprobando cada cosa o si hay casos donde solo imprimo el resultado y no verifico nada?”
+
+19. “Para la insercion de 45 espero dos divisiones y una raiz nueva. Las escrituras tendrian que dar 5? quiero entender la cuenta antes de poner ese numero como esperado.”
+
+20. “Que prueba chiquita puedo agregar para saber si buscarRango se pasa de largo? quiero un ejemplo donde termine justo en la ultima clave de una hoja.”
+
+**`ArchivoDatos` y `BMasApp` — Sebastián López**
+
+21. “Con titulos que tienen ñ o tildes me queda mal el largo. Estoy usando la cantidad de caracteres del String, pero tendria que usar la cantidad de bytes? explicame esa diferencia.”
+
+22. “En rango quiero mostrar solo los primeros 10, pero contar todos los resultados. Si dejo de llamar al consumidor despues de 10 estoy cortando tambien la busqueda? me estoy mezclando ahi.”
+
+23. “La consulta buscar me funciona solo si antes ejecuto construir en el mismo programa. Como tendria que separar los comandos para que buscar abra los .dat y no vuelva a leer el TSV?”
+
+24. “Para mezclar el indice tengo un arreglo de claves y otro de posiciones. Si intercambio una clave tambien tengo que intercambiar su posicion verdad? mostrame un ejemplo porque me estan saliendo peliculas que no corresponden.”
+
+**`ExperimentoBMas` — Blas Oviedo**
+
+25. “Che, puse new Random(2026) al principio de cada tabla para que salga igual siempre. Pero en C y D dice que hay que seguir con el mismo generador, entonces lo estoy reiniciando mal? explicame donde tendria que crearlo.”
+
+26. “Estoy sacando el promedio de paginas leidas y me da 2 aunque algunas busquedas leen 3. Tengo los dos numeros como int, puede ser por eso o estoy sumando cualquier cosa?”
+
+27. “Si uso semilla 2026 significa que siempre voy a buscar las mismas claves? no termino de entender para que sirve la semilla, explicamelo con un ejemplo chico.”
+
+28. “Ya hice las mediciones pero una ejecucion tarda mas que otra y las paginas leidas dan igual. Para comparar los tamaños de pagina me fijo en el tiempo o en los accesos? quiero entender que estoy midiendo.”
+
+29. “Te paso el bucle que hice para las consultas. Podes revisar si estoy reiniciando bien los contadores entre una busqueda y otra? me parece que el promedio me esta acumulando lo anterior.”
+
+**Análisis del README — ambos integrantes**
+
+30. “Escribimos que con paginas mas grandes el arbol tiene menos niveles porque entran mas claves. Esta bien explicado o nos falta mencionar la cantidad de hijos de los internos? revisá esa idea.”
+
+31. “En el analisis pusimos que las hojas quedan siempre al 50% despues de insertar en orden. Aver, eso pasa justo cuando se dividen o siguen asi despues? creo que mezclamos las dos cosas.”
+
+
+32. “Te paso este parrafo del README que escribimos entre los dos. Podes marcar las partes confusas o que afirman demasiado? queremos corregirlo nosotros, sobre todo donde decimos que una configuracion es siempre mejor.”
+
+### 3. Cambios que introdujimos sobre lo que propuso la IA
+
+Las consultas a la IA nos sirvieron como punto de partida y para revisar dudas. Después ajustamos las propuestas y nuestras implementaciones en los siguientes aspectos:
+
+1. **Enlaces al dividir una hoja — Blas.** Corregimos el orden de actualización del campo `siguiente`. Primero guardamos el enlace anterior, después se lo asignamos a la hoja nueva y finalmente enlazamos la hoja original con la nueva. Así evitamos perder la conexión con las hojas que ya estaban a la derecha, como ocurría al insertar 40.
+
+2. **División de internos y asignación de páginas — Sebastián.** Adaptamos la propuesta para que el interno izquierdo conserve `techo((M + 1)/2)` hijos y el derecho reciba los restantes. La clave que sube al padre se retira del interno. También ordenamos la creación de páginas de abajo hacia arriba: hoja nueva, interno nuevo y raíz nueva. Este ajuste permite reproducir la asignación de las páginas 6, 7 y 8 al insertar 45.
+
+3. **Recorrido por rango — Blas.** Reemplazamos la lista intermedia de resultados por llamadas directas a `ConsumidorEntrada`, porque no se permiten colecciones y no hace falta guardar todos los pares. Además, ajustamos la parada: si la última clave de la hoja ya alcanza el límite superior, no se lee la siguiente. Con el rango de 20 a 45 se evita una lectura innecesaria.
+
+4. **Apertura del índice — Sebastián.** Ampliamos la validación inicial, que solamente comprobaba la marca del archivo. Agregamos controles de versión, tamaño de página, correspondencia de M y L y longitud del archivo según la cantidad de páginas declarada. Esto permite rechazar cabeceras incompatibles y archivos truncados antes de ejecutar una consulta.
+
+5. **Verificación de invariantes — ambos.** Extendimos la propuesta para comparar la cadena de hojas con el orden obtenido al recorrer el árbol. También separamos las lecturas de diagnóstico de los contadores usados en las mediciones. Para las cotas de las claves, reemplazamos las expresiones que restaban uno al límite por comparaciones directas, evitando desbordamientos con `Long.MIN_VALUE`.
+
+6. **Archivo de datos y comandos — Sebastián.** Corregimos el largo de los registros para guardar la cantidad de bytes en UTF-8, en lugar de la cantidad de caracteres del `String`. En la consulta por rango, separamos el límite de registros mostrados del total de resultados encontrados. También adaptamos los comandos para abrir los `.dat` en cada ejecución y ajustamos la mezcla aleatoria para intercambiar siempre la clave junto con su posición.
+
+7. **Pruebas — Blas.** Ampliamos las comprobaciones para que no se limitaran a imprimir resultados. Agregamos verificaciones de claves duplicadas y rangos que terminan exactamente en la última clave de una hoja. Para la inserción de 45, relacionamos las escrituras esperadas con las dos divisiones de la traza: `2 * 2 + 1 = 5`. El objetivo fue comprobar tanto los resultados como los accesos a páginas.
+
+8. **Mediciones — Blas.** Corregimos el reinicio del generador aleatorio: las consultas de las tablas C y D continúan con el mismo `Random(2026)`. Ajustamos los promedios para realizar la división con decimales y reiniciamos los contadores al comenzar cada medición. Así evitamos perder la parte decimal o acumular accesos de operaciones anteriores.
+
+9. **Explicaciones del README — ambos.** Después de la revisión con IA, reformulamos nuestras conclusiones sobre la altura y la ocupación. Aclaramos que el máximo de hijos influye en los niveles y que la inserción creciente deja las hojas cerca de la mitad de su capacidad, no siempre exactamente al 50 %. También quitamos afirmaciones de que una configuración es siempre mejor y relacionamos cada conclusión con las tablas, distinguiendo los tiempos de ejecución de las páginas leídas.

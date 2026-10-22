@@ -1,0 +1,136 @@
+CASO 1: árbol vacío
+OK: cabecera inicial
+OK: capacidades
+OK: contadores iniciales
+OK: vuelco vacío
+OK: búsqueda vacía
+Rango [1, 10]: 
+OK: rango y lecturas
+CASOS 2 A 6: inserciones, divisiones y crecimiento
+insertar(50) R=1 W=1 páginas=2
+1: #1[50]
+Invariantes: OK
+OK: traza de 50
+OK: invariantes de 50
+OK: diagnóstico sin cambiar contadores
+insertar(20) R=1 W=1 páginas=2
+1: #1[20,50]
+Invariantes: OK
+OK: traza de 20
+OK: invariantes de 20
+OK: diagnóstico sin cambiar contadores
+insertar(80) R=1 W=1 páginas=2
+1: #1[20,50,80]
+Invariantes: OK
+OK: traza de 80
+OK: invariantes de 80
+OK: diagnóstico sin cambiar contadores
+insertar(10) R=1 W=3 páginas=4
+1: #3(50)
+2: #1[10,20] | #2[50,80]
+Invariantes: OK
+OK: traza de 10
+OK: invariantes de 10
+OK: diagnóstico sin cambiar contadores
+insertar(30) R=2 W=1 páginas=4
+1: #3(50)
+2: #1[10,20,30] | #2[50,80]
+Invariantes: OK
+OK: traza de 30
+OK: invariantes de 30
+OK: diagnóstico sin cambiar contadores
+insertar(60) R=2 W=1 páginas=4
+1: #3(50)
+2: #1[10,20,30] | #2[50,60,80]
+Invariantes: OK
+OK: traza de 60
+OK: invariantes de 60
+OK: diagnóstico sin cambiar contadores
+insertar(90) R=2 W=3 páginas=5
+1: #3(50,80)
+2: #1[10,20,30] | #2[50,60] | #4[80,90]
+Invariantes: OK
+OK: traza de 90
+OK: invariantes de 90
+OK: diagnóstico sin cambiar contadores
+insertar(40) R=2 W=3 páginas=6
+1: #3(30,50,80)
+2: #1[10,20] | #5[30,40] | #2[50,60] | #4[80,90]
+Invariantes: OK
+OK: traza de 40
+OK: invariantes de 40
+OK: diagnóstico sin cambiar contadores
+insertar(70) R=2 W=1 páginas=6
+1: #3(30,50,80)
+2: #1[10,20] | #5[30,40] | #2[50,60,70] | #4[80,90]
+Invariantes: OK
+OK: traza de 70
+OK: invariantes de 70
+OK: diagnóstico sin cambiar contadores
+insertar(25) R=2 W=1 páginas=6
+1: #3(30,50,80)
+2: #1[10,20,25] | #5[30,40] | #2[50,60,70] | #4[80,90]
+Invariantes: OK
+OK: traza de 25
+OK: invariantes de 25
+OK: diagnóstico sin cambiar contadores
+insertar(35) R=2 W=1 páginas=6
+1: #3(30,50,80)
+2: #1[10,20,25] | #5[30,35,40] | #2[50,60,70] | #4[80,90]
+Invariantes: OK
+OK: traza de 35
+OK: invariantes de 35
+OK: diagnóstico sin cambiar contadores
+insertar(45) R=2 W=5 páginas=9
+1: #8(50)
+2: #3(30,40) | #7(80)
+3: #1[10,20,25] | #5[30,35] | #6[40,45] | #2[50,60,70] | #4[80,90]
+Invariantes: OK
+OK: traza de 45
+OK: invariantes de 45
+OK: diagnóstico sin cambiar contadores
+insertar(15) R=3 W=3 páginas=10
+1: #8(50)
+2: #3(20,30,40) | #7(80)
+3: #1[10,15] | #9[20,25] | #5[30,35] | #6[40,45] | #2[50,60,70] | #4[80,90]
+Invariantes: OK
+OK: traza de 15
+OK: invariantes de 15
+OK: diagnóstico sin cambiar contadores
+OK: crecimiento a tres niveles
+CASO 7: extremos y camino de búsqueda
+OK: primera clave
+OK: última clave
+OK: camino 8, 3, 5
+CASO 8: clave ausente y duplicado
+OK: clave ausente
+OK: duplicado sin escrituras
+OK: posición original del duplicado
+CASOS 9 Y 10: rangos y parada exacta
+Rango [31, 35]: 35
+OK: rango y lecturas
+Rango [22, 62]: 25 30 35 40 45 50 60
+OK: rango y lecturas
+Rango [20, 45]: 20 25 30 35 40 45
+OK: rango y lecturas
+Rango [35, 35]: 35
+OK: rango y lecturas
+Rango [91, 100]: 
+OK: rango y lecturas
+Rango [-9223372036854775808, 9223372036854775807]: 10 15 20 25 30 35 40 45 50 60 70 80 90
+OK: rango y lecturas
+OK: rango invertido
+OK: formato de hoja
+OK: formato de interno
+OK: estadísticas
+OK: todos los diagnósticos sin contadores
+CASO 11: cierre, cabecera y archivo inválido
+OK: tamaño persistido
+OK: reapertura sin leer nodos
+OK: cabecera persistida
+CASO 12: consultas después de reabrir
+OK: consultas persistidas
+OK: invariantes al reabrir
+OK: cabecera inválida
+OK: tamaño de página inválido
+Comprobaciones: 70. Fallas: 0.

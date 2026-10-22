@@ -1,0 +1,18 @@
+OK: extremos, inserción aleatoria y persistencia con P=44
+OK: extremos, inserción aleatoria y persistencia con P=45
+OK: extremos, inserción aleatoria y persistencia con P=52
+OK: extremos, inserción aleatoria y persistencia con P=60
+OK: extremos, inserción aleatoria y persistencia con P=64
+OK: extremos, inserción aleatoria y persistencia con P=128
+OK: extremos, inserción aleatoria y persistencia con P=4096
+OK: daño 0: No se pudo verificar el índice: Tipo o cantidad de claves inválida en #1
+OK: daño 1: La hoja #1 tiene pocos pares.
+OK: daño 2: La cadena de hojas no sigue el orden del árbol en #9.
+OK: daño 3: Una clave de #1 no respeta sus separadores.
+OK: daño 4: Las claves de #1 no son estrictamente crecientes.
+OK: daño 5: El interno #3 tiene siguiente distinto de -1.
+OK: daño 6: No se pudo verificar el índice: Referencia fuera del archivo: #99
+OK: daño 7: Una clave de #3 no respeta sus separadores.
+OK: daño 8: Una clave de #8 no respeta sus separadores.
+OK: daño 9: La cantidad de claves no coincide con la cabecera.
+Comprobaciones adicionales: 12767. Fallas: 0.
